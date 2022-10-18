@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Practica1VUE</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .color-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 7px;
+            display: inline-block;
+        }
+
+        .clic {
+            cursor: pointer;
+        }
+
+        .quantity button {
+            border-radius: 50%;
+            display: inline-block;
+            width: 30px;
+        }
+
+        .quantity div {
+            text-align: center;
+            min-width: 30px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .buy-box {
+            margin: 20px;
+        }
+
+        footer {
+
+            text-align: center;
+            padding: 30px 10px;
+            margin-top: 50px;
+            min-height: 100px;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .producto-relacionado-precio {
+            background: orangered;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg " :style="`background-color: ${menuColor}`">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">{{marca}}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" v-for="menu of menus">
+                            <a class="nav-link" aria-current="page" href="#" v-for="(value,key) of menu">{{value}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="container" v-for="producto in productos" :key="producto.id">
+
+            <div class="row">
+                <h3>{{producto.nombre}}</h3>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4 ">
+                    <img v-bind:src="producto.imagen" alt="" width="100%">
+                </div>
+                <div class="col-12 col-sm-6  col-md-8">
+                    <h6>{{producto.descripcion}}</h6>
+                    <div class="p-3 mb-2 text-white" v-bind:style="precioEstilos">
+                        Precio: {{producto.precio}} BOB
+                    </div>
+                    <h5>Color</h5>
+                    <div>
+                        <div class="color-box clic" v-for="color of producto.colores"
+                            @click="asignarColor(`${color}`, `${producto.id}`)" :style="`background: ${color}`">
+                        </div>
+                    </div>
+                    <h5>Cantidad</h5>
+                    <div class="quantity">
+                        <button v-on:click="restarCantidad()">-</button>
+                        <div> {{counter}}</div> <button v-on:click="addCantidad()">+</button>
+                    </div>
+                    <div class="buy-box" v-if="counter<=0">
+                        <button class="btn btn-primary" disabled>Comprar</button>
+                    </div>
+                    <div class="buy-box" v-else>
+                        <button class="btn btn-primary" v-on:click="comprar()">Comprar</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="container ">
+
+            <div class="row">
+                <h4>Productos relacionados</h4>
+            </div>
+            <div class="row">
+                <div class="col" v-for="prod of productosRelacionados">
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{prod.nombre}}</h5>
+                            <img v-bind:src="prod.imagen" alt="" width="100%">
+                            <p class="card-text">{{prod.descripcion}}</p>
+                            <div class="producto-relacionado-precio"> Precio: {{prod.precio}} BOB</div>
+                            <div>
+                                <div>
+                                    <div class="color-box clic" v-for="color of prod.colores" @click=""
+                                        :style="`background: ${color}`"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <footer :style="`background-color: ${footerColor}`">
+        </footer>
+
+    </div>
+
+</body>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            marca: "MegaDron",
+            menuColor: "lightblue",
+            footerColor: "slategrey",
+            precioEstilos: "background: orangered; color: white; font-weight: bold",
+            counter: 0,
+            deshabilitar: "disabled",
+            menus: [
+                {
+                    etiqueta: "Inicio"
+
+                },
+                {
+                    etiqueta: "Tienda"
+
+                }
+            ],
+            productos: [
+                {
+                    id: 1,
+                    imagen: "https://ae01.alicdn.com/kf/Sc3cc58f2a441419f970cc01f9e5358fbw/Dron-LU3-MAX-GPS-8K - HD - profesional - con - c - mara - Dual - card - n - autoestabilizador - Motor - sin.jpg_Q90.jpg_.webp",
+                    nombre: "Dron LU3 MAX GPS 8K HD",
+                    descripcion: "Dron LU3 MAX GPS 8K HD profesional con <b>cámara Dual</b>,cardán autoestabilizador, Motor sin escobillas para evitar obstáculos, cuadricóptero plegable",
+                    precio: "620",
+                    colores: ["red", "blue", "black", "yellow"]
+                }
+            ],
+            productosRelacionados: [
+                {
+                    id: 2,
+                    imagen: "https://ae01.alicdn.com/kf/Hd59f72dd965d467dbbd499275a70b1d4z/Dron-plegable-KF102-con- Gps - 8K - c - mara - Dual - HD - 2 - ejes - card - n - Motor - sin.jpg_Q90.jpg_.webp",
+                    nombre: "KF102",
+                    descripcion: "Dron plegable KF102 con Gps, 8K, cámara Dual HD, 2 ejes,cardán, Motor sin escobillas, fotografía aérea, 1200M de distancia, novedad de 2022",
+                    precio: "1180",
+                    colores: ["orange", "blue"]
+                },
+                {
+                    id: 3,
+                    imagen: "https://ae01.alicdn.com/kf/S947d9284b5ea4531a1bec599a09a1f49K/KBDFA-Dron-E888-RC- cuadric - ptero - profesional - FPV - 4K - HD - fotograf - a - a - rea - evitaci - n.jpg_Q90.jpg_.webp",
+                    nombre: "KBDFA-Dron E888 RC",
+                    descripcion: "KBDFA-Dron E888 RC, cuadricóptero profesional FPV, 4K HD,fotografía aérea, evitación de obstáculos, helicóptero, juguetes de distancia",
+                    precio: "154",
+                    colores: ["black", "midnightblue"]
+                },
+                {
+                    id: 4,
+                    imagen: "https://ae01.alicdn.com/kf/S552326188797415ab6c729f850ab2639R/Dron-Profesional-4K-con- GPS - 8K - c - mara - HD - 3 - ejes - card - n - antivibraci - n - evitaci.jpg_Q90.jpg_.webp",
+                    nombre: "Dron Profesional 4K con GPS",
+                    descripcion: "Dron Profesional 4K con GPS, 8K, cámara HD, 3 ejes, cardán antivibración, evitación de obstáculos, fotografía aérea, Quadcopter, nuevo",
+                    precio: "1800",
+                    colores: ["teal", "blue", "slategrey", "navy"]
+                }
+            ],
+            pedido: [
+                {
+                    id: null,
+                    cantidad: 0,
+                    color: null
+                }
+            ]
+
+        },
+        methods: {
+            asignarColor: function (color, id) {
+                app.pedido.id = id;
+                app.pedido.color = color;
+            },
+            comprar: function () {
+                app.pedido.cantidad = app.counter;
+                alert('Esta seguro de comprar el producto ' + app.pedido.id + ' color: ' + app.pedido.color
+                    + " una cantidad de " + app.pedido.cantidad);
+            },
+            addCantidad: function () {
+                app.counter += 1;
+            },
+            restarCantidad: function () {
+                if (app.counter > 0) {
+                    app.counter -= 1;
+                }
+            }
+
+        }
+
+    });
+</script>
+
+</html>
