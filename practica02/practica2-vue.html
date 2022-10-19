@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="componentes/menu.js"></script>
+    <script src="componentes/footer.js"></script>
     <style>
         .color-box {
             width: 40px;
@@ -152,9 +153,8 @@
             </div>
         </div>
 
-
-        <footer :style="`background-color: ${footerColor}`">
-        </footer>
+<footer-vue :menu="menudata"></footer-vue>
+        
 
     </div>
 
@@ -183,6 +183,17 @@
             menudata: {
                 marca: "MegaDron",
                 menuColor: "background-color: lightblue",
+                footerColor: "background-color: slategrey",
+                menus: [
+                {
+                    etiqueta: "Inicio"
+
+                },
+                {
+                    etiqueta: "Tienda"
+
+                }
+            ],
             },
 
             productosRelacionados: null,
