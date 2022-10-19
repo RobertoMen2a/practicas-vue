@@ -14,6 +14,8 @@
     <script src="componentes/menu.js"></script>
     <script src="componentes/footer.js"></script>
     <script src="componentes/producto.js"></script>
+    <script src="componentes/productos_card.js"></script>
+
     <style>
         .color-box {
             width: 40px;
@@ -68,24 +70,6 @@
 <body>
     <div id="app">
         <menu-vue :menu="menudata"></menu-vue>
-        <!-- <nav class="navbar navbar-expand-lg " :style="`background-color: ${menuColor}`">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">{{marca}}</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item" v-for="menu of menus">
-                            <a class="nav-link" aria-current="page" href="#" v-for="(value,key) of menu">{{value}}</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div> -->
-        </nav>
 
         <div class="container">
 
@@ -125,9 +109,9 @@
 
         </div>
 
+        <productos-card :productos="productosRelacionados"></productos-card>
 
-
-        <div class="container ">
+        <!-- <div class="container ">
 
             <div class="row">
                 <h4>Productos relacionados</h4>
@@ -152,10 +136,10 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
-<footer-vue :menu="menudata"></footer-vue>
-        
+        <footer-vue :menu="menudata"></footer-vue>
+
 
     </div>
 
@@ -165,7 +149,7 @@
         el: "#app",
         data: {
             marca: "MegaDron",
-            menuColor: "lightblue",        
+            menuColor: "lightblue",
             footerColor: "slategrey",
             precioEstilos: "background: orangered; color: white; font-weight: bold",
             counter: 0,
@@ -186,15 +170,15 @@
                 menuColor: "background-color: lightblue",
                 footerColor: "background-color: slategrey",
                 menus: [
-                {
-                    etiqueta: "Inicio"
+                    {
+                        etiqueta: "Inicio"
 
-                },
-                {
-                    etiqueta: "Tienda"
+                    },
+                    {
+                        etiqueta: "Tienda"
 
-                }
-            ],
+                    }
+                ],
             },
 
             productosRelacionados: null,
