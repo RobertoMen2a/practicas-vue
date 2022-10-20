@@ -70,48 +70,12 @@
 <body>
     <div id="app">
         <menu-vue :menu="menudata"></menu-vue>
+        
+         <producto-selec :id=productoSeleccionado.id :precioestilos=precioEstilos :nombre=productoSeleccionado.nombre :imagen=productoSeleccionado.imagen 
+         :descripcion=productoSeleccionado.descripcion :precio=productoSeleccionado.precio :colores=productoSeleccionado.colores producto-selec>
+         </producto-selec>
 
-        <div class="container">
-
-            <div class="row">
-                <h3>{{productoSeleccionado.nombre}}</h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-md-4 ">
-                    <img v-bind:src="productoSeleccionado.imagen" alt="" width="100%">
-                </div>
-                <div class="col-12 col-sm-6  col-md-8">
-                    <h6>{{productoSeleccionado.descripcion}}</h6>
-                    <div class="p-3 mb-2 text-white" v-bind:style="precioEstilos">
-                        Precio: {{productoSeleccionado.precio}} BOB
-                    </div>
-                    <h5>Color</h5>
-                    <div>
-                        <div class="color-box clic" v-for="color of productoSeleccionado.colores"
-                            @click="asignarColor(`${color}`, `${productoSeleccionado.id}`)"
-                            :style="`background: ${color}`">
-                        </div>
-                    </div>
-                    <h5>Cantidad</h5>
-                    <div class="quantity">
-                        <button v-on:click="restarCantidad()">-</button>
-                        <div> {{counter}}</div> <button v-on:click="addCantidad()">+</button>
-                    </div>
-                    <div class="buy-box" v-if="counter<=0">
-                        <button class="btn btn-primary" disabled>Comprar</button>
-                    </div>
-                    <div class="buy-box" v-else>
-                        <button class="btn btn-primary" v-on:click="comprar()">Comprar</button>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <productos-card :productos="productosRelacionados"></productos-card>
-
-        <!-- <div class="container ">
+        <div class="container ">
 
             <div class="row">
                 <h4>Productos relacionados</h4>
@@ -120,23 +84,11 @@
                 <div class="col" v-for="prod of productosRelacionados">
 
                     <div class="card" style="width: 18rem;" @click="getProductoById(prod.id)">
-                        <div class="card-body">
-                            <h5 class="card-title">{{prod.nombre}}</h5>
-                            <img v-bind:src="prod.imagen" alt="" width="100%">
-                            <p class="card-text">{{prod.descripcion}}</p>
-                            <div class="producto-relacionado-precio"> Precio: {{prod.precio}} BOB</div>
-                            <div>
-                                <div>
-                                    <div class="color-box clic" v-for="color of prod.colores" @click=""
-                                        :style="`background: ${color}`"></div>
-                                </div>
-                            </div>
-                        </div>
+                        <productos-card :nombre=prod.nombre :imagen=prod.imagen :descripcion=prod.descripcion :precio=prod.precio :colores=prod.colores></productos-card>                        
                     </div>
-
                 </div>
             </div>
-        </div> -->
+        </div> 
 
         <footer-vue :menu="menudata"></footer-vue>
 
